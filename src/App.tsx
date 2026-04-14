@@ -2,7 +2,10 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import './App.css'
 
-type Recipe = {
+// Andrew final practical 2026-04-14
+
+// changed from recipes to dishes becuase orignally i thought it was a recipes api but i realzied it looked more ike a menu as it has ratings and availbility
+type dishes = {
     id: string
     dishName: string
     cuisineType: string
@@ -12,6 +15,10 @@ type Recipe = {
     available: boolean
 }
 
+// get rating fucntion to chang the colour of the rating text colour stored in app.css, bases it between value above 70 as high, 70-50 mid, and below is low
+// high = green
+//mid = yelwo
+// low = red
 function getRating(rating: number): string {
     if (rating >= 70) return 'rating-high'
     if (rating >= 50) return 'rating-mid'
@@ -19,12 +26,12 @@ function getRating(rating: number): string {
 }
 
 function App() {
-    const [recipes, setRecipes] = useState<Recipe[]>([])
+    const [dishes, setdishess] = useState<dishes[]>([])
 
     useEffect(() => {
-        axios.get<Recipe[]>('https://api.npoint.io/6c48278e70bb1329ec40')
+        axios.get<dishes[]>('https://api.npoint.io/6c48278e70bb1329ec40')
             .then(res => {
-                setRecipes(res.data)
+                setdishess(res.data)
             })
             .catch(err => {
                 console.error(err)
@@ -47,15 +54,15 @@ function App() {
                 </tr>
                 </thead>
                 <tbody>
-                {recipes.map(recipe => (
-                    <tr key={recipe.id}>
-                        <td>{recipe.id}</td>
-                        <td>{recipe.dishName}</td>
-                        <td>{recipe.cuisineType}</td>
-                        <td>{recipe.servings}</td>
-                        <td className={getRating(recipe.rating)}>{recipe.rating}</td>
-                        <td>{recipe.featured ? 'Yes' : 'No'}</td>
-                        <td>{recipe.available ? 'Yes' : 'No'}</td>
+                {dishes.map(dishes => (
+                    <tr key={dishes.id}>
+                        <td>{dishes.id}</td>
+                        <td>{dishes.dishName}</td>
+                        <td>{dishes.cuisineType}</td>
+                        <td>{dishes.servings}</td>
+                        <td className={getRating(dishes.rating)}>{dishes.rating}</td>
+                        <td>{dishes.featured ? 'Yes' : 'No'}</td>
+                        <td>{dishes.available ? 'Yes' : 'No'}</td>
                     </tr>
                 ))}
                 </tbody>
