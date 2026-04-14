@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
+import './App.css'
 
 type Recipe = {
     id: string
@@ -9,6 +10,12 @@ type Recipe = {
     rating: number
     featured: boolean
     available: boolean
+}
+
+function getRating(rating: number): string {
+    if (rating >= 70) return 'rating-high'
+    if (rating >= 50) return 'rating-mid'
+    return 'rating-low'
 }
 
 function App() {
@@ -26,17 +33,17 @@ function App() {
 
     return (
         <div>
-            <h1>Recipes</h1>
+            <h1>Food Options</h1>
             <table border={1}>
                 <thead>
                 <tr>
-                    <th>id</th>
-                    <th>dishname</th>
-                    <th>Cuisinetype</th>
-                    <th>servings</th>
-                    <th>rating</th>
-                    <th>featured</th>
-                    <th>available</th>
+                    <th>ID</th>
+                    <th>Dish Name</th>
+                    <th>Cuisine Type</th>
+                    <th>Servings</th>
+                    <th>Rating</th>
+                    <th>Featured</th>
+                    <th>Available?</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -46,7 +53,7 @@ function App() {
                         <td>{recipe.dishName}</td>
                         <td>{recipe.cuisineType}</td>
                         <td>{recipe.servings}</td>
-                        <td>{recipe.rating}</td>
+                        <td className={getRating(recipe.rating)}>{recipe.rating}</td>
                         <td>{recipe.featured ? 'Yes' : 'No'}</td>
                         <td>{recipe.available ? 'Yes' : 'No'}</td>
                     </tr>
